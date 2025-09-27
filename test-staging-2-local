@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: test-staging-2-local
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/foreground
+  labels:
+    codefresh.io/product: my-product
+  annotations:
+    codefresh.io/product: my-product
+spec:
+  project: default
+  destination:
+    name: in-cluster
+    namespace: staging
+  source:
+    path: resources-staging-2
+    repoURL: https://github.com/eti-codefresh/guestbook-local.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+      allowEmpty: false
+    syncOptions:
+      - PrunePropagationPolicy=foreground
+      - Replace=false
+      - PruneLast=true
+      - Validate=true
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=false
+      - ServerSideApply=true
+      - RespectIgnoreDifferences=false
