@@ -7,7 +7,7 @@ metadata:
   labels:
     codefresh.io/product: my-product
   annotations:
-    codefresh.io/product: my-product
+    codefresh.io/product: api
 spec:
   project: default
   destination:
